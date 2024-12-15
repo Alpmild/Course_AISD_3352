@@ -10,39 +10,39 @@ from math import asin as math_asin
 from math import acos as math_acos
 
 corners = [
-        0.7853981633974483,
-        0.4636476090008061,
-        0.2449786631268641,
-        0.1243549945467614,
-        0.0624188099959574,
-        0.0312398334302683,
-        0.0156237286204768,
-        0.0078123410601011,
-        0.0039062301319670,
-        0.0019531225164788,
-        0.0009765621895593,
-        0.0004882812111949,
-        0.0002441406201494,
-        0.0001220703118937,
-        6.10351561742e-05,
-        3.05175781155e-05,
-        1.52587890613e-05,
-        7.6293945311e-06,
-        3.8146972656e-06,
-        1.9073486328e-06,
-        9.536743164e-07,
-        4.768371582e-07,
-        2.384185791e-07,
-        1.192092896e-07,
-        5.96046448e-08,
-        2.98023224e-08,
-        1.49011612e-08,
-        7.4505806e-09,
-        3.7252903e-09,
-        1.8626451e-09,
-        9.313226e-10,
-        4.656613e-10,
-    ]
+    0.7853981633974483,
+    0.4636476090008061,
+    0.2449786631268641,
+    0.1243549945467614,
+    0.0624188099959574,
+    0.0312398334302683,
+    0.0156237286204768,
+    0.0078123410601011,
+    0.0039062301319670,
+    0.0019531225164788,
+    0.0009765621895593,
+    0.0004882812111949,
+    0.0002441406201494,
+    0.0001220703118937,
+    6.10351561742e-05,
+    3.05175781155e-05,
+    1.52587890613e-05,
+    7.6293945311e-06,
+    3.8146972656e-06,
+    1.9073486328e-06,
+    9.536743164e-07,
+    4.768371582e-07,
+    2.384185791e-07,
+    1.192092896e-07,
+    5.96046448e-08,
+    2.98023224e-08,
+    1.49011612e-08,
+    7.4505806e-09,
+    3.7252903e-09,
+    1.8626451e-09,
+    9.313226e-10,
+    4.656613e-10,
+]
 
 frac_bits = 12
 _format = {'signed': True, 'm': 8, 'n': frac_bits}
@@ -55,7 +55,7 @@ inf = float('inf')
 def angles(qf: dict) -> list:
     res = []
 
-    for i in range(len(corners)):
+    for i in range(min(qf['n'], len(corners))):
         r = FixedPoint(corners[i], **qf)
         if r == 0:
             break
@@ -228,3 +228,40 @@ def graphics(
     pyplot.clf()
     _format['n'] = format_n
 
+
+tests = (dict(x_0=-pi / 2,
+              x_n=pi / 2,
+              cnt=100,
+              cordic_func=sin,
+              math_func=math_sin,
+              title_form='sin {} bits',
+              file_form='Graphics\\sin\\sin_{}.png',
+              x_label='radians',
+              func_title='sin'),
+         dict(x_0=0,
+              x_n=pi,
+              cnt=100,
+              cordic_func=cos,
+              math_func=math_cos,
+              title_form='cos {} bits',
+              file_form='Graphics\\cos\\cos_{}.png',
+              x_label='radians',
+              func_title='cos'),
+         dict(x_0=-1.0,
+              x_n=1.0,
+              cnt=100,
+              cordic_func=asin,
+              math_func=math_asin,
+              title_form='arcsine {} bits',
+              file_form='Graphics\\arcsine\\arcsine_{}.png',
+              x_label='number',
+              func_title='arcsine')
+         )
+
+
+def main():
+    for info in tests:
+        graphics(**info)
+
+
+main()

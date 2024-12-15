@@ -47,7 +47,7 @@ inf = float('inf')
 def angles(qf: dict) -> list:
     res = []
 
-    for i in range(len(corners)):
+    for i in range(min(qf['n'], len(corners))):
         r = FixedPoint(corners[i], **qf)
         if r == 0:
             break
