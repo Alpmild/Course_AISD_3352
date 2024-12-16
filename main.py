@@ -7,7 +7,6 @@ import numpy as np
 from math import sin as math_sin
 from math import cos as math_cos
 from math import asin as math_asin
-from math import acos as math_acos
 
 corners = [
     0.7853981633974483,
@@ -45,7 +44,7 @@ corners = [
 ]
 
 frac_bits = 12
-_format = {'signed': True, 'm': 8, 'n': frac_bits}
+_format = {'signed': True, 'm': 8, 'n': frac_bits, 'rounding': 'in'}
 
 pi = 3.1415926535897932
 pi_fixed = FixedPoint(pi, **_format)
@@ -55,7 +54,7 @@ inf = float('inf')
 def angles(qf: dict) -> list:
     res = []
 
-    for i in range(min(qf['n'], len(corners))):
+    for i in range(len(corners)):
         r = FixedPoint(corners[i], **qf)
         if r == 0:
             break
